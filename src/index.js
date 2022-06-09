@@ -5,23 +5,49 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import About from './pages/About';
 import News from './pages/News';
+
 import Student from './pages/Student';
+import StudentDetail from './pages/StudentDetail';
+import StudentAdd from './pages/StudentAdd';
+
+import Product from './pages/Product';
+import ProductDetail from './pages/ProductDetail';
+import ProductAdd from './pages/ProductAdd';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ProductEdit from './pages/ProductEdit';
 
 // Khởi tạo đối tượng router
 const router = new Navigo('/', { linksSelector: 'a' });
 
-const render = async(content) => {
+const render = async(content, id) => {
+    // content sẽ là toàn bộ component
+    // cần thêm tham số vào hàm này để truyền id cho những phần detail
     document.querySelector('#header').innerHTML = Header.render();
-    document.querySelector('#content').innerHTML = await content;
+    document.querySelector('#content').innerHTML = await content.render(id);
     document.querySelector('#footer').innerHTML = Footer.render();
-}
+
+    // Sau khi content đã render xong thì afterRender mới được chạy
+    if (content.afterRender) {
+        content.afterRender();
+    }
+};
 
 router.on({
-    '/': () => render(Home.render()),
-    '/about': () => render(About.render()),
-    '/news': () => render(News.render()),
-    '/students': () => render(Student.render()),
+    '/': () => render(Home),
+    '/about': () => render(About),
+    '/news': () => render(News),
+
+
+    '/students': () => render(Student),
+    '/students/add': () => render(StudentAdd),
+    '/students/:id': (data) => render(StudentDetail, data.data.id),
+
+
+    '/products': () => render(Product),
+    '/products/add': () => render(ProductAdd),
+    '/products/:id': (data) => render(ProductDetail, data.data.id),
+    '/products/edit/:id': (data) => render(ProductEdit, data.data.id)
 });
 router.resolve();
 
