@@ -14,11 +14,22 @@ import Product from './pages/Product';
 import ProductDetail from './pages/ProductDetail';
 import ProductAdd from './pages/ProductAdd';
 
+import Categories from './pages/Categories';
+import CategoriesDetail from './pages/CategoriesDetail';
+import CategoriesAdd from './pages/CategoriesAdd';
+import CategoriesEdit from './pages/CategoriesEdit';
+
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ProductEdit from './pages/ProductEdit';
 
 // Khởi tạo đối tượng router
-const router = new Navigo('/', { linksSelector: 'a' });
+// const router = new Navigo('/', { linksSelector: 'a' });
+import router from './helpers/router';
+import Cart from './components/Cart';
+import CartDetail from './pages/CartDetail';
+import Contact from './pages/Contact';
+
 
 const render = async(content, id) => {
     // content sẽ là toàn bộ component
@@ -37,17 +48,32 @@ router.on({
     '/': () => render(Home),
     '/about': () => render(About),
     '/news': () => render(News),
+    '/contacts': () => render(Contact),
 
+
+    // '/students': () => render(Student),
+    // '/students/add': () => render(StudentAdd),
+    // '/students/:id': (data) => render(StudentDetail, data.data.id),
 
     '/students': () => render(Student),
-    '/students/add': () => render(StudentAdd),
     '/students/:id': (data) => render(StudentDetail, data.data.id),
+    '/students/add': () => render(StudentAdd),
+    '/students/edit/:id': (data) => render(StudentAdd, data.data.id),
+    '/cart-detail': () => render(CartDetail),
+    '/book-contact': () => render(Contact),
 
 
     '/products': () => render(Product),
     '/products/add': () => render(ProductAdd),
     '/products/:id': (data) => render(ProductDetail, data.data.id),
-    '/products/edit/:id': (data) => render(ProductEdit, data.data.id)
+    '/products/edit/:id': (data) => render(ProductEdit, data.data.id),
+
+    '/categories': () => render(Categories),
+    '/categories/add': () => render(CategoriesAdd),
+    '/categories/:id': (data) => render(CategoriesDetail, data.data.id),
+    '/categories/edit/:id': (data) => render(CategoriesEdit, data.data.id)
+
+
 });
 router.resolve();
 
@@ -75,6 +101,8 @@ const sum2 = (a, b) => a + b; // nếu chỉ có return
 
 const display = a => console.log(a); // nếu chỉ có 1 tham số
 const display1 = a => alert(a);
+
+
 // Callback: hàm được truyền vào dưới dạng 1 đối số, và thực thi trong 1 hàm
 
 // const abc = (print) => {
